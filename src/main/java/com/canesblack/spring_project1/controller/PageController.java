@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class PageController {
 	
 	@GetMapping("/")
-	public String returnHome() {
+	public String home() {
 		return "index";
 	}
 	/* @GetMapping: 주로 데이터를 조회하거나 페이지를 보여줄 때 사용합니다. 클라이언트는 서버 자원을 읽는 요청입니다.
@@ -19,4 +19,14 @@ public class PageController {
 	 * @DeleteMapping: 리소스를 삭제할 때 사용합니다. 주로 자원의 식별자를 URL에 담아 호출합니다.
 	 * CRUD의 기능
 	 */
+	
+	@GetMapping("/register") /* => localhost:port번호/register를 의미한다*/
+	public String registerPage() {
+		return "register/registerPage";
+	}
+	
+	@GetMapping("/loginPage") /* => localhost:port번호/register를 의미한다*/
+	public String loginPage() {
+		return "login/loginPage"; /*폴더명/페이지에서 확장자만 뺀것. 왜? 환경설정하는 부분에서 확장자를 설정해서 작성안해도 됨*/
+	}
 }
