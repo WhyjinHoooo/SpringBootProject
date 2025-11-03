@@ -22,11 +22,11 @@ public class PageController {
 	
 	@GetMapping("/register") /* => localhost:port번호/register를 의미한다*/
 	public String registerPage() {
-		return "register/registerPage";
+		return "register/index";
 	}
 	
 	@GetMapping("/loginPage") /* => localhost:port번호/register를 의미한다*/
 	public String loginPage() {
-		return "login/loginPage"; /*폴더명/페이지에서 확장자만 뺀것. 왜? 환경설정하는 부분에서 확장자를 설정해서 작성안해도 됨*/
+		return "login/index"; /*폴더명/페이지에서 확장자만 뺀것. 왜? 환경설정하는 부분에서 확장자를 설정해서 작성안해도 됨*/
 	}
 }
