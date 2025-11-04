@@ -29,7 +29,7 @@
 			<input type="submit" id="login-button" />
 		</form>
 		<div id="register-link">
-			<a href="${pageContext.request.contextPath}/register">회원가입</a>
+			<a href="${pageContext.request.contextPath}/registerPage">회원가입</a>
 		</div>
 	</div>
 </div>

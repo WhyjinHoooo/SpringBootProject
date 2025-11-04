@@ -1,9 +1,16 @@
 package com.canesblack.spring_project1.controller;
 
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+
+import com.canesblack.spring_project1.entity.User;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 // @Component는 한 마디로 springBean(스프링 컨테이너의 객체)으로 등록하기 위한 라벨링 작업
@@ -20,8 +27,12 @@ public class PageController {
 	 * CRUD의 기능
 	 */
 	
-	@GetMapping("/register") /* => localhost:port번호/register를 의미한다*/
-	public String registerPage() {
+	@GetMapping("/registerPage") /* => localhost:port번호/register를 의미한다*/
+	public String registerPage(HttpServletRequest request, Model model) {
+		
+		CsrfToken csrfToken = (CsrfToken)request.getAttribute(CsrfToken.class.getName());
+		model.addAttribute("_csrf", csrfToken);
+		
 		return "register/index";
 	}
 	

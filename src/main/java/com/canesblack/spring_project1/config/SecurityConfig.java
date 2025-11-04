@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -40,7 +42,7 @@ public class SecurityConfig {
 		 * */ 
 		http
 		.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-		/* csrf해킹기법으로 보호조치를 하는 코드방법. => 나중에 따로 자바스크립트에 csrf보호기능도 넣어준 것이다. 
+		/* csrf해킹기법으로 보호조치를 하는 코드방법. => 나중에 따로 HTML과 자바스크립트에 csrf보호기능도 넣어줄 것이다. 
 		 * 프론트영역 -> 백엔드 영역으로 데이터가 넘어갈때 해당 기능을 따로 적용해야 한다. 그래서 False로 지정
 		 * 그럼 왜 따로 지정해야 하냐? 한번에 적용하면 RESTAPI 형식을 적용할 수 없다.
 		 * */
@@ -50,9 +52,9 @@ public class SecurityConfig {
 		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
 		// 세션 설정
 		.authorizeHttpRequests(
-			authz -> authz.requestMatchers("/","/loginPage","/logout", "/noticeCheckPage", "/register", "/menu/all")
+			authz -> authz.requestMatchers("/","/loginPage","/logout", "/noticeCheckPage", "/registerPage", "/menu/all")
 			.permitAll()
-			.requestMatchers(HttpMethod.POST, "/login").permitAll() // 모든 사람들이 접속 가능하게 함
+			.requestMatchers(HttpMethod.POST, "/login", "/register").permitAll() // 모든 사람들이 접속 가능하게 함
 			.requestMatchers("/resource/**", "/WEB-INF/**").permitAll() // **의 의미는 해당 폴더의 하위 폴더를 의미
 			.requestMatchers("/noticerAdd", "noticeModifyPage").hasAnyAuthority("ADMIN", "MANAGER") // 해당 페이지는 특정 권한을 가진 사람만 접속하게 함
 			.requestMatchers(HttpMethod.POST, "/menu/add").hasAnyAuthority("ADMIN", "MANAGER") // 해당 페이지는 특정 권한을 가진 사람만 접속하게 함
@@ -102,6 +104,12 @@ public class SecurityConfig {
 			}
 		};
 	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
 	
 	@Bean
 	public CorsConfigurationSource corsCorsfigurationSource() {
