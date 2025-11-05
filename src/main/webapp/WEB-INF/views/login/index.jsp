@@ -15,6 +15,9 @@
 		<h2>로그인</h2>
 		<!-- localhost:port번호/login으로 username과 password가 넘어감 -->
 		<form action="${pageContext.request.contextPath}/login" method="post">
+			<!-- csrf토큰 추가 -->
+			<input type="hidden" name="_csrf" value="${_csrf.token}">
+		
 			<div class="input-group">
 				<label for="username">아이디</label>
 				<input type="text" id="username" name="username" required/>

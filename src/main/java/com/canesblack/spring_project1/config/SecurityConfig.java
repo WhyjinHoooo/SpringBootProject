@@ -51,18 +51,20 @@ public class SecurityConfig {
 		// 한국 <-> 미국 서버간의 데이터를 캄보디아 서버에서 탈취하는 것을 방지하는 코드
 		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
 		// 세션 설정
-		.authorizeHttpRequests(
+		.authorizeHttpRequests( // 권한 설정
 			authz -> authz.requestMatchers("/","/loginPage","/logout", "/noticeCheckPage", "/registerPage", "/menu/all")
 			.permitAll()
 			.requestMatchers(HttpMethod.POST, "/login", "/register").permitAll() // 모든 사람들이 접속 가능하게 함
 			.requestMatchers("/resource/**", "/WEB-INF/**").permitAll() // **의 의미는 해당 폴더의 하위 폴더를 의미
-			.requestMatchers("/noticerAdd", "noticeModifyPage").hasAnyAuthority("ADMIN", "MANAGER") // 해당 페이지는 특정 권한을 가진 사람만 접속하게 함
+			.requestMatchers("/noticeAdd", "/noticeModifyPage").hasAnyAuthority("ADMIN", "MANAGER") // 해당 페이지는 특정 권한을 가진 사람만 접속하게 함
 			.requestMatchers(HttpMethod.POST, "/menu/add").hasAnyAuthority("ADMIN", "MANAGER") // 해당 페이지는 특정 권한을 가진 사람만 접속하게 함
 			.requestMatchers(HttpMethod.POST, "/menu/update").hasAnyAuthority("ADMIN", "MANAGER") // 해당 페이지는 특정 권한을 가진 사람만 접속하게 함
 			.requestMatchers(HttpMethod.DELETE, "/menu/delete").hasAnyAuthority("ADMIN", "MANAGER") // 해당 페이지는 특정 권한을 가진 사람만 접속하게 함
-			.anyRequest().authenticated()
+			.anyRequest().authenticated() /*위에 등록돼있지 않은 주소를 입력할 때는 로그인을 해야 접근이 가능합니다.
+			* 그렇기떄문에 로그인페이지로 자동으로 이동됩니다.
+			*/
 		) 
-		.formLogin(
+		.formLogin( // 로그인 규칙
 			login -> login.loginPage("/loginPage") //url을 작성해서 로그인페이지로 이동할 때,
 			.loginProcessingUrl("/login") // 로그인 페이지에 있는 form태그의 액션에 작성된 최종 url부분
 			.failureUrl("/loginPage?error=true")
@@ -74,11 +76,12 @@ public class SecurityConfig {
 		.logout(
 			logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 URL을 통해서 로그아웃이 진행됨
 			.logoutSuccessUrl("/") // 로그아웃이 성공하면 해당 URL로 리다이렉팅해주세요.
-			.invalidateHttpSession(true) // 세션 기능 무효화
+			.invalidateHttpSession(true) // 세션 기능 무효화 => 세션 공간에 있던 데이터는 전부 사라져서 로그아웃 상태가 된다.
 			.deleteCookies("JSESSIONID") // cookie삭제
 			.permitAll()
 		);
 		return http.build();
+		// 최종 HTTP에 적용시킬 때 사용하는 메서드 입니다.
 	}
 	
 	@Bean
@@ -96,8 +99,8 @@ public class SecurityConfig {
 				if(isManager) {
 					session.setAttribute("MANAGER", true);
 				}
-				session.setAttribute("username", authentication.getName());
-				session.setAttribute("isAuthenticatied", true);
+				session.setAttribute("username", authentication.getName()); // 세션에 사용자의 아이디를 저장한다.
+				session.setAttribute("isAuthenticated", true); // 세션에 로그인 여부를 저장
 				// request.getContextPath() => locahost:8090
 				response.sendRedirect(request.getContextPath() + "/");
 				super.onAuthenticationSuccess(request, response, authentication);
@@ -107,6 +110,7 @@ public class SecurityConfig {
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
+		// 스프링 프레임워크의 비밀번호 암호화
 		return new BCryptPasswordEncoder();
 	}
 	
