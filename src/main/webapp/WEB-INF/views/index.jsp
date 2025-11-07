@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 <title>카네스블랙 카페</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/style.css">
 </head>
@@ -28,7 +30,8 @@
 			</div>
 		</div>
 	</div>
-	
 	<%@include file="/WEB-INF/views/common/footer.jsp" %> 
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resource/js/script.js"></script>
+
 </body>
 </html>

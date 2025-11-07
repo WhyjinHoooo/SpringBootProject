@@ -67,7 +67,7 @@ public class SecurityConfig {
 		.formLogin( // 로그인 규칙
 			login -> login.loginPage("/loginPage") //url을 작성해서 로그인페이지로 이동할 때,
 			.loginProcessingUrl("/login") // 로그인 페이지에 있는 form태그의 액션에 작성된 최종 url부분
-			.failureUrl("/loginPage?error=true")
+			.failureUrl("/loginPage?error=true") // 로그인 실패했을 때 발생하는 에러
 			.usernameParameter("username")
 			.passwordParameter("password")
 			.successHandler(authenticationSuccessHandler())
