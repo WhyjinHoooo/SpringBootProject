@@ -23,7 +23,7 @@
 			즉, 운영진만 가질 수 있는 기능을 추가할 거임
 			 -->
 			<c:if test="${MANAGER == true}">
-				<button type="button" id="" onclick="location.href=`${pageContext.request.contextPath}/noticeAdd`">작성</button>
+				<button type="button" id="" onclick="location.href=`${pageContext.request.contextPath}/noticeAddPage`">작성</button>
 				<!-- location.href=localhost:XXXX/noticeAdd -->
 			</c:if>
 			<div id="menuList">

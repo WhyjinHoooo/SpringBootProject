@@ -19,7 +19,7 @@ public class MenuRestService {
 		return menuRestMapper.getLists();
 	}
 	
-	//게시글 추가하느 메서드
+	//게시글 추가하는 메서드
 	public void boardInsert(Menu menu) {
 		menuRestMapper.boardInsert(menu);
 	}

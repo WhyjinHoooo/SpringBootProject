@@ -1,5 +1,7 @@
 package com.canesblack.spring_project1.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import com.canesblack.spring_project1.entity.User;
+import com.canesblack.spring_project1.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -16,6 +19,9 @@ import jakarta.servlet.http.HttpServletRequest;
 // @Component는 한 마디로 springBean(스프링 컨테이너의 객체)으로 등록하기 위한 라벨링 작업
 public class PageController {
 
+	@Autowired
+	private UserService userService;
+	
 	@GetMapping("/")
 	public String home() {
 		return "index";
@@ -43,7 +49,12 @@ public class PageController {
 		model.addAttribute("_csrf", csrfToken);
 		return "login/index";
 	}
-
+	@GetMapping("/noticeAddPage")
+	public String noticeAddPage() {
+		/* Model은 일조의 공간으로 백엔드에서 프론트로 데이터를 전달할 때 데이터가 담기는 공간이다.
+		 * 세션과 차이는 화면이 새로고침을 하는 경우, 모델에 담겼던 데이터는 소멸된다. 즉, 일회용이다. */
+		return "noticeAdd/index";
+	}
 	/*
 	 * @GetMapping("/loginPage") => localhost:port번호/register를 의미한다 public String
 	 * loginPage() { return "login/index"; 폴더명/페이지에서 확장자만 뺀것. 왜? 환경설정하는 부분에서 확장자를
