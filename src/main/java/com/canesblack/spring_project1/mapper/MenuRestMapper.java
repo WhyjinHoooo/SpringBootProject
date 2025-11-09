@@ -18,10 +18,10 @@ public interface MenuRestMapper {
 			+ "VALUES(#{memID}, #{title}, #{content}, #{writer}, #{indate})") // CRUD 중 C
 	public void boardInsert(Menu menu);
 	
-	@Select("SELECT idx, memID, title, content, indate, count FROM backend_spring_project.menu ORDER BY idx DESC")
+	@Select("SELECT idx, memID, title, content, indate, count, writer FROM backend_spring_project.menu ORDER BY idx DESC")
 	public List<Menu>getLists();// CRUD 중 R
 	
-	@Select("SELECT idx, memID, title, content, indate, count FROM backend_spring_project.menu "
+	@Select("SELECT idx, memID, title, content, indate, count, writer FROM backend_spring_project.menu "
 			+ "WHERE idx = #{idx}")
 	public Menu boardContent(int idx);
 	

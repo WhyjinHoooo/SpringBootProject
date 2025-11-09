@@ -50,9 +50,11 @@ public class PageController {
 		return "login/index";
 	}
 	@GetMapping("/noticeAddPage")
-	public String noticeAddPage() {
+	public String noticeAddPage(Model model, Authentication authentication) {
 		/* Model은 일조의 공간으로 백엔드에서 프론트로 데이터를 전달할 때 데이터가 담기는 공간이다.
 		 * 세션과 차이는 화면이 새로고침을 하는 경우, 모델에 담겼던 데이터는 소멸된다. 즉, 일회용이다. */
+		String writer = userService.findWriter(authentication.getName());
+		model.addAttribute("writer", writer);
 		return "noticeAdd/index";
 	}
 	/*
