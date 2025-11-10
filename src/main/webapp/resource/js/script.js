@@ -38,7 +38,6 @@ function fetchMenus(){
 	})
 }
 function incrementCount(idx){
-	console.log('썅', idx);
 	return fetch(`/menu/count/${idx}`,{
 		method : 'PUT',
 		headers : {

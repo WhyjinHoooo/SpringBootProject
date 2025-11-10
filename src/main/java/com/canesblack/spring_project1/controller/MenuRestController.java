@@ -63,7 +63,7 @@ public class MenuRestController {
 	}
 	
 	//4. 메뉴(한 개의 게시판) 삭제
-	@DeleteMapping("/menu/delete{idx}")
+	@DeleteMapping("/menu/delete/{idx}")
 	public void DeleteMenu(@PathVariable("idx") int idx) {
 		menuRestService.boardDelete(idx);
 	}
