@@ -18,8 +18,10 @@
 #### ERD
 <img width="347" height="226" alt="스프링eer" src="https://github.com/user-attachments/assets/a333e201-e9bf-445c-a6fd-52bff4c3bdaa" />
 ---
+
 #### API 설계
 <img width="2400" height="911" alt="Swagger_API_메서드별_역할_요약표" src="https://github.com/user-attachments/assets/19bec25b-7837-43aa-b1c2-2b0b5574d9a9" />
+
 ---
 ### 구현한 기능
 * 회원가입, 로그인
