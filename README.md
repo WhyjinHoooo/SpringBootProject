@@ -17,6 +17,7 @@
 
 #### ERD
 <img width="347" height="226" alt="스프링eer" src="https://github.com/user-attachments/assets/a333e201-e9bf-445c-a6fd-52bff4c3bdaa" />
+
 ---
 
 #### API 설계
