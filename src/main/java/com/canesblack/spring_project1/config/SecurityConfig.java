@@ -21,6 +21,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -52,8 +53,9 @@ public class SecurityConfig {
 		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
 		// 세션 설정
 		.authorizeHttpRequests( // 권한 설정
-			authz -> authz.requestMatchers("/","/loginPage","/logout", "/noticeCheckPage", "/registerPage", "/menu/all")
-			.permitAll()
+			authz -> authz
+			.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE, DispatcherType.ERROR, DispatcherType.REQUEST).permitAll()
+			.requestMatchers("/","/loginPage","/logout", "/noticeCheckPage", "/registerPage", "/menu/all").permitAll()
 			.requestMatchers(HttpMethod.POST, "/login", "/register").permitAll() // 모든 사람들이 접속 가능하게 함
 			.requestMatchers("/resource/**", "/WEB-INF/**").permitAll() // **의 의미는 해당 폴더의 하위 폴더를 의미
 			.requestMatchers("/noticeAddPage", "/noticeModifyPage").hasAnyAuthority("ADMIN", "MANAGER") // 해당 페이지는 특정 권한을 가진 사람만 접속하게 함
